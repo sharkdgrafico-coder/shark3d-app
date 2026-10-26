@@ -1,268 +1,59 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  
-  <meta name="description" content="Controle de produtos, catálogo e custos da Shark 3D">
-  
-  
-  <style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shark 3D App</title>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-:root{--navy:#071b35;--blue:#0877d1;--cyan:#39b9ff;--ink:#142338;--muted:#718096;--line:#e3eaf2;--bg:#f3f7fb;--white:#fff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}.topbar{height:72px;background:var(--navy);color:white;display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,calc((100% - 1100px)/2));position:sticky;top:0;z-index:4}.brand{display:flex;align-items:center;gap:10px}.mark{font-size:30px}.brand strong{font-size:18px;letter-spacing:1.5px}.brand strong span{color:var(--cyan)}.brand small{display:block;font-size:9px;letter-spacing:2px;color:#a9c3dc;margin-top:3px}.connection{font-size:11px;color:#b9d9f2;background:#16395d;padding:7px 10px;border-radius:20px}main{max-width:1100px;margin:auto;padding:24px 20px 50px}.hero{background:linear-gradient(120deg,#071b35,#07589b);color:white;border-radius:22px;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;overflow:hidden}.hero h1{margin:6px 0;font-size:clamp(23px,4vw,34px)}.hero p{color:#c8def1;margin:7px 0}.hero-shark{font-size:74px;filter:drop-shadow(0 10px 12px #00152b)}.eyebrow{font-size:10px;font-weight:800;letter-spacing:1.7px;color:#1685d8;margin:0 0 8px}.tabs{display:flex;gap:8px;margin:22px 0}.tab{border:0;background:#e4edf6;color:#52677e;padding:12px 20px;border-radius:12px;font-weight:700;cursor:pointer}.tab.active{background:var(--navy);color:white}.panel{display:none}.panel.active{display:block}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:16px}.stat,.card{background:white;border:1px solid var(--line);border-radius:17px;padding:20px}.stat span{display:block;color:var(--muted);font-size:13px}.stat strong{font-size:30px;display:block;margin-top:7px;color:var(--navy)}.card{margin-bottom:16px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.section-head h2{font-size:21px;margin:0}.section-head p:not(.eyebrow){margin:6px 0 0}.quick-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.quick{background:#f0f7fd;border:1px solid #d9ebfa;border-radius:14px;padding:17px;text-align:left;display:flex;align-items:center;gap:12px;color:var(--navy);font-weight:700;cursor:pointer}.quick b{font-size:23px;color:var(--blue);background:white;border-radius:10px;width:38px;height:38px;display:grid;place-items:center}.text-btn{border:0;background:none;color:var(--blue);font-weight:700;cursor:pointer}.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}.product{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:white}.product img,.product .placeholder{width:100%;height:150px;object-fit:cover;background:#eaf3fb;display:grid;place-items:center;font-size:40px}.product-body{padding:12px}.product h3{font-size:14px;margin:0 0 6px}.product .desc{font-size:11px;color:var(--muted);min-height:28px}.price{font-size:17px;font-weight:800;color:#0877d1;margin:8px 0}.stock{font-size:11px;color:var(--muted)}.product-body .secondary{font-size:11px;padding:9px;margin:9px 0 0}.delete{border:0;background:#fff0f0;color:#b42318;padding:7px 9px;border-radius:8px;font-size:11px;margin-top:9px;cursor:pointer}.form-card{max-width:760px}h3{margin-top:0}label{display:block;font-size:12px;font-weight:700;color:#40536a;margin:12px 0}input,textarea{display:block;width:100%;margin-top:7px;border:1px solid #d9e2ec;border-radius:10px;padding:12px;font:inherit;font-size:14px;background:#fbfdff;color:var(--ink)}input:focus,textarea:focus{outline:2px solid #b9e1ff;border-color:#1685d8}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.primary,.secondary{border:0;border-radius:11px;padding:13px 17px;font-weight:800;cursor:pointer;width:100%;margin-top:10px}.primary{background:linear-gradient(90deg,#0877d1,#12a5ec);color:white}.secondary{background:#e8f4fd;color:#075b9d}.upload{border:1px dashed #9abbd7;padding:13px;border-radius:12px;display:flex;justify-content:space-between;align-items:center}.upload input{max-width:190px;font-size:11px;border:0;padding:0}.photo-preview img{width:90px;height:90px;object-fit:cover;border-radius:10px}.catalog-toolbar{display:flex;align-items:center;gap:12px;margin:20px 0}.catalog-toolbar input{max-width:360px;margin:0}.muted,.hint{font-size:12px;color:var(--muted)}.empty{text-align:center;color:#8292a5;padding:25px;font-size:13px}.result{margin-top:20px;padding:17px;border-radius:14px;background:#f0f8ff;border:1px solid #cce7fb}.result-line{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #dcecf8;font-size:13px}.suggested{display:flex;justify-content:space-between;align-items:center;padding:14px 0 5px;color:#075b9d}.suggested strong{font-size:27px}.hint{line-height:1.6;margin-top:16px}.login{max-width:430px;margin:40px auto}.hidden{display:none!important}footer{text-align:center;color:#91a0b1;font-size:10px;padding:22px}.login h1{margin-top:0}@media(max-width:600px){main{padding:16px 13px 35px}.topbar{padding:0 14px}.hero{padding:22px 20px}.hero-shark{font-size:53px}.hero p{font-size:12px}.tab{padding:11px 13px;flex:1}.two{grid-template-columns:1fr;gap:0}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product img,.product .placeholder{height:125px}.stat{padding:15px}.stat strong{font-size:25px}.card{padding:16px}.catalog-toolbar{align-items:stretch;flex-direction:column}.catalog-toolbar input{max-width:none}}
-
-select{display:block;width:100%;margin-top:7px;border:1px solid #d9e2ec;border-radius:10px;padding:12px;font:inherit;font-size:14px;background:#fbfdff;color:var(--ink)}
-hr{border:0;border-top:1px solid var(--line);margin:22px 0}
-
-</style>
-  <title>Shark 3D App</title>
-</head>
+:root{--navy:#071b35;--blue:#0877d1;--cyan:#39b9ff;--ink:#142338;--muted:#718096;--line:#e3eaf2;--bg:#f3f7fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}.topbar{height:70px;background:var(--navy);color:white;display:flex;align-items:center;justify-content:space-between;padding:0 max(16px,calc((100% - 1100px)/2));position:sticky;top:0;z-index:4}.brand{font-weight:800;letter-spacing:1.5px}.brand span{color:var(--cyan)}.connection{font-size:11px;background:#16395d;padding:8px 11px;border-radius:20px}main{max-width:1100px;margin:auto;padding:22px 16px 45px}.hero{background:linear-gradient(120deg,#071b35,#07589b);color:white;border-radius:20px;padding:25px;display:flex;justify-content:space-between;align-items:center}.hero h1{margin:5px 0}.hero p{color:#c8def1;margin:5px 0}.shark{font-size:65px}.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:18px 0}.tab{border:0;background:#e4edf6;color:#52677e;padding:11px 16px;border-radius:10px;font-weight:700;cursor:pointer}.tab.active{background:var(--navy);color:white}.panel{display:none}.panel.active{display:block}.card,.stat{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:15px}.stats,.two{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.stat span{color:var(--muted);font-size:13px}.stat strong{display:block;font-size:27px;color:var(--navy);margin-top:5px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.section-head h2{margin:0}.muted,.hint{color:var(--muted);font-size:12px}.form-card{max-width:760px}label{display:block;font-size:12px;font-weight:700;color:#40536a;margin:12px 0}input,textarea,select{display:block;width:100%;margin-top:7px;border:1px solid #d9e2ec;border-radius:10px;padding:12px;font:inherit;font-size:14px;background:#fbfdff;color:var(--ink)}button{cursor:pointer}.primary,.secondary{border:0;border-radius:10px;padding:13px 16px;font-weight:800;width:100%;margin-top:10px}.primary{background:linear-gradient(90deg,#0877d1,#12a5ec);color:white}.secondary{background:#e8f4fd;color:#075b9d}.upload{border:1px dashed #79acd5;padding:15px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:68px;background:#fafdff}.photo-drop{cursor:pointer;transition:.15s}.photo-drop.dragover{border:2px dashed var(--blue);background:#eaf6ff}.photo-pick{background:#e8f4ff;color:#075b9d;border-radius:9px;padding:10px 13px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}.photo-pick input{display:none}.photo-preview{margin-top:8px}.photo-preview img{width:90px;height:90px;object-fit:cover;border-radius:10px}.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:13px}.product{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:white}.product img,.placeholder{width:100%;height:145px;object-fit:cover;background:#eaf3fb;display:grid;place-items:center;font-size:38px}.product-body{padding:12px}.product h3{font-size:14px;margin:0 0 6px}.desc,.stock{font-size:11px;color:var(--muted)}.price{font-size:17px;font-weight:800;color:var(--blue);margin:8px 0}.delete{border:0;background:#fff0f0;color:#b42318;padding:8px;border-radius:8px;font-size:11px;margin-top:8px}.catalog-toolbar{display:flex;gap:10px;align-items:center;margin:16px 0}.catalog-toolbar input{max-width:360px}.result{background:#f0f8ff;border:1px solid #cce7fb;border-radius:12px;padding:15px;margin-top:15px}.result-line{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #dcecf8;font-size:13px}.hidden{display:none!important}.empty{text-align:center;color:#8292a5;padding:22px;font-size:13px}.login{max-width:430px;margin:40px auto}footer{text-align:center;color:#91a0b1;font-size:10px;padding:20px}@media(max-width:600px){main{padding:14px 11px}.two,.stats{grid-template-columns:1fr}.hero{padding:20px}.shark{font-size:48px}.tab{flex:1;padding:10px 8px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.catalog-toolbar{align-items:stretch;flex-direction:column}.catalog-toolbar input{max-width:none}}
+</style></head>
 <body>
-<header class="topbar">
-  <div class="brand"><div class="mark">🦈</div><div><strong>SHARK <span>3D</span></strong><small>GESTÃO E CATÁLOGO</small></div></div>
-  <div style="display:flex;align-items:center;gap:8px"><div id="connection" class="connection">Aguardando acesso</div><button id="logoutBtn" class="secondary hidden" style="width:auto;margin:0;padding:7px 10px">Sair</button></div>
-</header>
-
+<header class="topbar"><div class="brand">🦈 SHARK <span>3D</span></div><div style="display:flex;gap:8px;align-items:center"><div id="connection" class="connection">Aguardando acesso</div><button id="logout" class="secondary hidden" style="width:auto;margin:0;padding:7px">Sair</button></div></header>
 <main>
-  <section id="loginView" class="login card">
-    <h1>Acessar Shark 3D</h1>
-    <p>Entre com o e-mail e a senha compartilhados por vocês.</p>
-    <label>E-mail<input id="email" type="email" placeholder="voce@email.com" autocomplete="username"></label>
-    <label>Senha<input id="password" type="password" placeholder="Sua senha" autocomplete="current-password"></label>
-    <button id="loginBtn" class="primary" type="button">Entrar</button>
-    <button id="signupBtn" class="secondary" type="button">Criar acesso</button>
-    <p id="loginMsg" class="muted"></p>
-  </section>
-
-  <section id="appView" class="hidden">
-    <section class="hero">
-      <div><p class="eyebrow">PAINEL DE CONTROLE</p><h1>Olá! Vamos produzir? 💙</h1><p>Organize seus produtos, custos e catálogo em um só lugar.</p></div>
-      <div class="hero-shark">🦈</div>
-    </section>
-
-    <nav class="tabs">
-      <button class="tab active" data-tab="home">Início</button>
-      <button class="tab" data-tab="catalog">Catálogo</button>
-      <button class="tab" data-tab="calculator">Calculadora</button>
-      <button class="tab" data-tab="filaments">Filamentos</button>
-      <button class="tab" data-tab="history">Histórico</button>
-      <button class="tab" data-tab="settings">Ajustes</button>
-    </nav>
-
-    <section id="home" class="panel active">
-      <div class="stats">
-        <article class="stat"><span>Produtos cadastrados</span><strong id="totalProducts">0</strong></article>
-        <article class="stat"><span>Itens em estoque</span><strong id="totalStock">0</strong></article>
-      </div>
-      <div class="card">
-        <div class="section-head"><div><p class="eyebrow">ACESSO RÁPIDO</p><h2>O que deseja fazer?</h2></div></div>
-        <div class="quick-actions">
-          <button class="quick" data-go="catalog"><b>＋</b><span>Cadastrar produto</span></button>
-          <button class="quick" data-go="calculator"><b>▱</b><span>Calcular custo</span></button>
-        </div>
-      </div>
-      <div class="card">
-        <div class="section-head"><div><p class="eyebrow">SEUS PRODUTOS</p><h2>Adicionados recentemente</h2></div><button class="text-btn" data-go="catalog">Ver catálogo</button></div>
-        <div id="recentProducts" class="product-grid"></div>
-        <p id="emptyRecent" class="empty">Seus produtos aparecerão aqui quando forem cadastrados.</p>
-      </div>
-    </section>
-
-    <section id="catalog" class="panel">
-      <div class="section-head"><div><p class="eyebrow">VITRINE SHARK 3D</p><h2>Catálogo de produtos</h2><p class="muted">Cadastre fotos, preços e quantidade disponível.</p></div></div>
-      <div class="card form-card">
-        <h3>Novo produto</h3>
-        <form id="productForm">
-          <label>Nome do produto<input id="productName" required maxlength="70" placeholder="Ex.: Caneca personalizada"></label>
-          <div class="two">
-            <label>Preço de venda (R$)<input id="productPrice" type="number" min="0" step="0.01" required placeholder="0,00"></label>
-            <label>Quantidade pronta<input id="productStock" type="number" min="0" step="1" value="0"></label>
-          </div>
-          <label>Descrição (opcional)<textarea id="productDescription" rows="2" placeholder="Detalhes do produto..."></textarea></label>
-          <label class="upload">Foto do produto<input id="productPhoto" type="file" accept="image/*"><span>Escolher foto do celular</span></label>
-          <div id="photoPreview" class="photo-preview"></div>
-          <button class="primary" type="submit">Salvar no catálogo</button>
-          <p id="productMsg" class="muted"></p>
-        </form>
-      </div>
-      <div class="catalog-toolbar"><input id="catalogSearch" placeholder="Buscar produto..."><span id="catalogCount" class="muted">0 produtos</span></div>
-      <div id="catalogGrid" class="product-grid"></div>
-      <p id="emptyCatalog" class="empty">Ainda não há produtos. Cadastre o primeiro acima!</p>
-    </section>
-
-    <section id="calculator" class="panel">
-      <div class="section-head"><div><p class="eyebrow">FORMAÇÃO DE PREÇO</p><h2>Calculadora Shark 3D</h2><p class="muted">Calcule custo, lucro e preço por unidade com os dados do fatiador.</p></div></div>
-      <div class="card form-card">
-        <form id="costForm">
-          <label>Nome do projeto<input id="costName" required placeholder="Ex.: Chaveiro personalizado"></label>
-          <div class="two"><label>Impressora<select id="machine"><option value="A1">Bambu Lab A1</option><option value="A1 Mini">Bambu Lab A1 Mini</option></select></label><label>Quantidade de peças<input id="quantity" type="number" min="1" step="1" value="1" required></label></div>
-          <div class="two"><label>Filamento<input id="filamentSelect" type="text" list="filamentOptions" placeholder="Ex.: PLA azul"><datalist id="filamentOptions"></datalist></label><label>Custo do filamento (R$/kg)<input id="filamentPrice" type="number" min="0" step="0.01" value="140"></label></div>
-          <div class="two"><label>Peso total do projeto (g)<input id="grams" type="number" min="0" step="0.1" value="50" required></label><label>Tempo de impressão (hh:mm)<input id="printTime" type="text" value="2:00" placeholder="2:30"></label></div>
-          <div class="two"><label>Tempo de acabamento (hh:mm)<input id="finishTime" type="text" value="0:00" placeholder="0:30"></label><label>Risco de falha (%)<input id="failure" type="number" min="0" max="100" step="0.1" value="0"></label></div>
-          <div class="two"><label>Outros custos (R$)<input id="extras" type="number" min="0" step="0.01" value="0"></label><label>Embalagem (R$)<input id="packaging" type="number" min="0" step="0.01" value="0"></label></div>
-          <div class="two"><label>Lucro desejado (%)<input id="margin" type="number" min="0" step="1" value="100"></label><label>Estoque de filamento (g)<input id="filamentStock" type="number" min="0" step="1" placeholder="Opcional"></label></div>
-          <button class="primary" type="submit">Calcular orçamento</button>
-        </form>
-        <div id="costResult" class="result hidden">
-          <p class="eyebrow">RESULTADO ESTIMADO</p>
-          <div class="result-line"><span>Material</span><strong id="rFilament">R$ 0,00</strong></div>
-          <div class="result-line"><span>Energia</span><strong id="rEnergy">R$ 0,00</strong></div>
-          <div class="result-line"><span>Depreciação da máquina</span><strong id="rDepreciation">R$ 0,00</strong></div>
-          <div class="result-line"><span>Mão de obra / acabamento</span><strong id="rLabor">R$ 0,00</strong></div>
-          <div class="result-line"><span>Extras + embalagem</span><strong id="rExtras">R$ 0,00</strong></div>
-          <div class="result-line"><span>Provisão para falhas</span><strong id="rFailure">R$ 0,00</strong></div>
-          <div class="result-line"><span>Custo total do projeto</span><strong id="rCost">R$ 0,00</strong></div>
-          <div class="result-line"><span>Custo por unidade</span><strong id="rUnitCost">R$ 0,00</strong></div>
-          <div class="suggested"><span>Preço sugerido do projeto</span><strong id="rPrice">R$ 0,00</strong></div>
-          <div class="result-line"><span>Preço sugerido por unidade</span><strong id="rUnitPrice">R$ 0,00</strong></div>
-          <p id="rProfit" class="muted"></p><p id="rPayback" class="muted"></p>
-          <div class="two"><button id="saveCalculation" class="secondary" type="button">Salvar no histórico</button><button id="saveCostProduct" class="secondary" type="button">Salvar no catálogo</button></div>
-          <button id="copyQuote" class="secondary" type="button">Copiar orçamento</button>
-        </div>
-        <p class="hint">Consumo, tarifa, vida útil, depreciação e mão de obra são configuráveis em Ajustes. A calculadora não mistura filamentos/cores. Resultado estimado; taxas, impostos e frete não são incluídos automaticamente.</p>
-      </div>
-    </section>
-    <section id="filaments" class="panel">
-      <div class="section-head"><div><p class="eyebrow">GESTÃO DE MATERIAIS</p><h2>Estoque de filamentos</h2><p class="muted">Cadastre carretéis e acompanhe o peso restante.</p></div></div>
-      <div class="card form-card"><form id="filamentForm">
-        <label>Identificação do carretel<input id="spoolName" required placeholder="Ex.: PLA Azul Shark"></label>
-        <div class="two"><label>Marca<input id="spoolBrand" placeholder="Marca"></label><label>Material<input id="spoolMaterial" placeholder="PLA, PETG, ABS..."></label></div>
-        <div class="two"><label>Cor<input id="spoolColor" placeholder="Azul"></label><label>Preço pago (R$)<input id="spoolPrice" type="number" min="0" step="0.01" required></label></div>
-        <div class="two"><label>Peso inicial (g)<input id="spoolInitial" type="number" min="1" step="1" value="1000" required></label><label>Peso atual (g)<input id="spoolCurrent" type="number" min="0" step="1" value="1000" required></label></div>
-        <button class="primary" type="submit">Salvar carretel</button>
-      </form></div>
-      <div id="filamentGrid" class="product-grid"></div><p id="emptyFilaments" class="empty">Nenhum carretel cadastrado ainda.</p>
-    </section>
-    <section id="history" class="panel">
-      <div class="section-head"><div><p class="eyebrow">PROJETOS SALVOS</p><h2>Histórico de cálculos</h2></div><button id="exportHistory" class="text-btn">Exportar CSV</button></div>
-      <div class="card"><div id="historyList"></div><p id="emptyHistory" class="empty">Seus orçamentos salvos aparecerão aqui.</p></div>
-    </section>
-    <section id="settings" class="panel">
-      <div class="section-head"><div><p class="eyebrow">PREFERÊNCIAS</p><h2>Ajustes da Shark 3D</h2><p class="muted">Configure os parâmetros de cada impressora e da sua operação.</p></div></div>
-      <div class="card form-card"><form id="settingsForm">
-        <h3>Bambu Lab A1</h3><div class="two"><label>Consumo (Watts)<input id="a1Watts" type="number" min="0" step="1"></label><label>Preço da máquina (R$)<input id="a1Price" type="number" min="0" step="0.01"></label></div><label>Vida útil estimada (horas)<input id="a1Life" type="number" min="1" step="1"></label>
-        <hr><h3>Bambu Lab A1 Mini</h3><div class="two"><label>Consumo (Watts)<input id="miniWatts" type="number" min="0" step="1"></label><label>Preço da máquina (R$)<input id="miniPrice" type="number" min="0" step="0.01"></label></div><label>Vida útil estimada (horas)<input id="miniLife" type="number" min="1" step="1"></label>
-        <hr><h3>Parâmetros de negócio</h3><div class="two"><label>Energia (R$/kWh)<input id="energyRate" type="number" min="0" step="0.01"></label><label>Mão de obra (R$/hora)<input id="laborRate" type="number" min="0" step="0.01"></label></div><label>Custo padrão do filamento (R$/kg)<input id="defaultFilament" type="number" min="0" step="0.01"></label>
-        <button class="primary" type="submit">Salvar ajustes</button><p id="settingsMsg" class="muted"></p>
-      </form><hr><h3>Backup e restauração</h3><p class="muted">Backup local dos produtos, filamentos, histórico e ajustes.</p><div class="two"><button id="backupBtn" class="secondary" type="button">Baixar backup</button><label class="secondary upload">Restaurar backup<input id="restoreFile" type="file" accept="application/json"></label></div></div>
-    </section>
-  </section>
-</main>
-<footer>SHARK 3D • Feito para organizar suas ideias e suas impressões.</footer>
+<section id="login" class="card login"><h2>Acessar Shark 3D</h2><p class="muted">Entre com o e-mail e a senha da sua conta.</p><label>E-mail<input id="email" type="email" autocomplete="username"></label><label>Senha<input id="password" type="password" autocomplete="current-password"></label><button id="loginBtn" class="primary">Entrar</button><button id="signupBtn" class="secondary">Criar acesso</button><p id="loginMsg" class="muted"></p></section>
+<section id="app" class="hidden">
+<div class="hero"><div><small>PAINEL DE CONTROLE</small><h1>Olá! Vamos produzir?</h1><p>Organize seus produtos, materiais e custos.</p></div><div class="shark">🦈</div></div>
+<nav class="tabs"><button class="tab active" data-tab="home">Início</button><button class="tab" data-tab="catalog">Catálogo</button><button class="tab" data-tab="calculator">Calculadora</button><button class="tab" data-tab="filaments">Filamentos</button><button class="tab" data-tab="history">Histórico</button><button class="tab" data-tab="settings">Ajustes</button></nav>
+<section id="home" class="panel active"><div class="stats"><div class="stat"><span>Produtos cadastrados</span><strong id="totalProducts">0</strong></div><div class="stat"><span>Itens em estoque</span><strong id="totalStock">0</strong></div></div><div class="card"><h2>Seus produtos</h2><div id="recent" class="product-grid"></div><p id="emptyRecent" class="empty">Cadastre seu primeiro produto no Catálogo.</p></div></section>
+<section id="catalog" class="panel"><div class="card form-card"><h2>Novo produto</h2><form id="productForm"><label>Nome do produto<input id="productName" required maxlength="70" placeholder="Ex.: Caneca personalizada"></label><div class="two"><label>Preço de venda (R$)<input id="productPrice" type="number" min="0" step=".01" required placeholder="0,00"></label><label>Quantidade pronta<input id="productStock" type="number" min="0" step="1" value="0"></label></div><label>Descrição (opcional)<textarea id="productDescription" rows="2"></textarea></label>
+<div class="upload photo-drop" id="photoDrop" tabindex="0" role="button" aria-label="Área para adicionar foto"><div><strong>Foto do produto</strong><div class="muted">Clique para escolher, arraste uma foto ou cole com Ctrl + V</div></div><label class="photo-pick">Escolher foto<input id="productPhoto" type="file" accept="image/*"></label></div><div id="photoPreview" class="photo-preview"></div><button class="primary" type="submit">Salvar no catálogo</button><p id="productMsg" class="muted"></p></form></div><div class="catalog-toolbar"><input id="search" placeholder="Buscar produto..."><span id="count" class="muted">0 produtos</span></div><div id="catalogGrid" class="product-grid"></div><p id="emptyCatalog" class="empty">Ainda não há produtos.</p></section>
+<section id="calculator" class="panel"><div class="card form-card"><h2>Calculadora de custo</h2><form id="costForm"><label>Nome do projeto<input id="costName" required></label><div class="two"><label>Impressora<select id="machine"><option>Bambu Lab A1</option><option>Bambu Lab A1 Mini</option></select></label><label>Quantidade<input id="quantity" type="number" min="1" value="1"></label></div><div class="two"><label>Filamento (g)<input id="grams" type="number" min="0" value="50"></label><label>Preço do filamento (R$/kg)<input id="filamentPrice" type="number" min="0" value="140"></label></div><div class="two"><label>Tempo de impressão (horas)<input id="hours" type="number" min="0" step=".1" value="2"></label><label>Outros custos (R$)<input id="extras" type="number" min="0" step=".01" value="0"></label></div><label>Lucro desejado (%)<input id="margin" type="number" min="0" value="100"></label><button class="primary">Calcular orçamento</button></form><div id="costResult" class="result hidden"></div></div></section>
+<section id="filaments" class="panel"><div class="card form-card"><h2>Estoque de filamentos</h2><form id="filamentForm"><label>Nome do carretel<input id="spoolName" required placeholder="PLA Azul"></label><div class="two"><label>Marca<input id="spoolBrand"></label><label>Material<input id="spoolMaterial" placeholder="PLA, PETG..."></label></div><div class="two"><label>Cor<input id="spoolColor"></label><label>Preço pago (R$)<input id="spoolPrice" type="number" min="0" step=".01" required></label></div><div class="two"><label>Peso inicial (g)<input id="spoolInitial" type="number" min="1" value="1000"></label><label>Peso atual (g)<input id="spoolCurrent" type="number" min="0" value="1000"></label></div><button class="primary">Salvar carretel</button></form></div><div id="spoolGrid" class="product-grid"></div><p id="emptySpools" class="empty">Nenhum carretel cadastrado.</p></section>
+<section id="history" class="panel"><div class="card"><div class="section-head"><h2>Histórico de cálculos</h2><button id="exportHistory" class="secondary" style="width:auto">Exportar CSV</button></div><div id="historyList"></div><p id="emptyHistory" class="empty">Nenhum cálculo salvo.</p></div></section>
+<section id="settings" class="panel"><div class="card"><h2>Ajustes e backup</h2><p class="muted">O backup inclui produtos, filamentos, histórico e configurações.</p><button id="backup" class="secondary">Baixar backup</button><label class="secondary upload">Restaurar backup<input id="restore" type="file" accept="application/json"></label><p class="hint">A restauração substitui os dados atuais da conta. Faça backup antes.</p></div></section>
+</section></main><footer>SHARK 3D • Gestão e catálogo</footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// Shark 3D App — versão ampliada com calculadora, estoque de filamentos e histórico.
-// Os dados desta versão permanecem no aparelho. Sincronização entre celulares ainda requer backend.
-const SUPABASE_URL = "https://gxtxnxsmzyptuwgmkvmv.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_vBvDsjqzGcS459b6t04snA_1wySvVO1";
-const $ = id => document.getElementById(id);
-const money = n => Number(n || 0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-const read = (key, fallback) => {try{return JSON.parse(localStorage.getItem(key)) ?? fallback}catch{return fallback}};
-let products=read("shark3d_products",[]), spools=read("shark3d_spools",[]), history=read("shark3d_history",[]);
-let settings=read("shark3d_settings",{
- A1:{watts:0,price:0,life:10000},mini:{watts:0,price:0,life:10000},
- energyRate:1,laborRate:0,defaultFilament:140
-});
-let lastCalculation=null, currentPhoto="";
-const cloud=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-let cloudUser=null, cloudReady=false, cloudTimer=null;
-const persistLocal=()=>{localStorage.setItem("shark3d_products",JSON.stringify(products));localStorage.setItem("shark3d_spools",JSON.stringify(spools));localStorage.setItem("shark3d_history",JSON.stringify(history));localStorage.setItem("shark3d_settings",JSON.stringify(settings));};
-const persist=()=>{
- persistLocal();
- if(!cloudReady||!cloudUser)return;
- clearTimeout(cloudTimer);
- cloudTimer=setTimeout(async()=>{
-  const payload={products,spools,history,settings};
-  const {error}=await cloud.from("shark3d_app_data").upsert({owner_id:cloudUser.id,payload,updated_at:new Date().toISOString()},{onConflict:"owner_id"});
-  $("connection").textContent=error?"Erro ao sincronizar":"☁️ Sincronizado";
-  if(error)console.error("Supabase:",error);
- },700);
-};
+const URL="https://gxtxnxsmzyptuwgmkvmv.supabase.co",KEY="sb_publishable_vBvDsjqzGcS459b6t04snA_1wySvVO1",db=window.supabase.createClient(URL,KEY),$=id=>document.getElementById(id),money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+let user=null,ready=false,timer=null,currentPhoto="",products=[],spools=[],history=[];
+const settings={defaultFilament:140};
+function persistLocal(){localStorage.setItem("shark3d_products",JSON.stringify(products));localStorage.setItem("shark3d_spools",JSON.stringify(spools));localStorage.setItem("shark3d_history",JSON.stringify(history));}
+function persist(){persistLocal();if(!ready||!user)return;clearTimeout(timer);timer=setTimeout(async()=>{const {error}=await db.from("shark3d_app_data").upsert({owner_id:user.id,payload:{products,spools,history,settings},updated_at:new Date().toISOString()},{onConflict:"owner_id"});$("connection").textContent=error?"Erro ao sincronizar":"☁️ Sincronizado";if(error)console.error(error);},600);}
 function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function showTab(name){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===name));}
-document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
-document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.go)));
-function productCard(p){let photo=p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:`<div class="placeholder">🦈</div>`;return `<article class="product">${photo}<div class="product-body"><h3>${escapeHtml(p.name)}</h3><div class="desc">${escapeHtml(p.description||"Produto Shark 3D")}</div><div class="price">${money(p.price)}</div><div class="stock">${Number(p.stock||0)} disponível(is)</div><button class="secondary" data-edit="${p.id}" type="button">Editar produto</button><label class="secondary" style="display:block;text-align:center;cursor:pointer;margin:7px 0;padding:9px;border-radius:9px">📷 Trocar foto<input type="file" accept="image/*" data-photo="${p.id}" style="display:none"></label><button class="delete" data-delete="${p.id}">Excluir produto</button></div></article>`;}
-function renderProducts(){ $("totalProducts").textContent=products.length;$("totalStock").textContent=products.reduce((s,p)=>s+Number(p.stock||0),0);$("catalogCount").textContent=`${products.length} produto(s)`;const q=$("catalogSearch").value.toLowerCase();const filtered=products.filter(p=>p.name.toLowerCase().includes(q));$("catalogGrid").innerHTML=filtered.map(productCard).join("");$("recentProducts").innerHTML=products.slice(-4).reverse().map(productCard).join("");$("emptyCatalog").classList.toggle("hidden",filtered.length>0);$("emptyRecent").classList.toggle("hidden",products.length>0);document.querySelectorAll("[data-delete]").forEach(b=>b.addEventListener("click",()=>{if(confirm("Excluir produto?")){products=products.filter(p=>p.id!==b.dataset.delete);persist();render();}}));document.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>{const p=products.find(x=>x.id===b.dataset.edit);if(!p)return;const name=prompt("Nome do produto:",p.name);if(name===null)return;const description=prompt("Descrição:",p.description||"");if(description===null)return;const price=prompt("Preço de venda (R$):",String(p.price));if(price===null)return;const stock=prompt("Quantidade em estoque:",String(p.stock||0));if(stock===null)return;if(!name.trim()||!Number.isFinite(Number(price))||Number(price)<0||!Number.isFinite(Number(stock))||Number(stock)<0){alert("Confira o nome, preço e estoque informados.");return;}p.name=name.trim();p.description=description.trim();p.price=Number(price);p.stock=Math.floor(Number(stock));persist();render();}));document.querySelectorAll("[data-photo]").forEach(input=>input.addEventListener("change",e=>{const file=e.target.files[0];if(!file)return;if(!file.type.startsWith("image/")){alert("Selecione um arquivo de imagem.");return;}if(file.size>2*1024*1024){alert("Escolha uma foto de até 2 MB.");e.target.value="";return;}const reader=new FileReader();reader.onload=()=>{const p=products.find(x=>x.id===input.dataset.photo);if(!p)return;p.photo=reader.result;persist();renderProducts();};reader.readAsDataURL(file);}));}
-function renderSpools(){ $("filamentGrid").innerHTML=spools.map(s=>`<article class="product"><div class="placeholder">🧵</div><div class="product-body"><h3>${escapeHtml(s.name)}</h3><div class="desc">${escapeHtml([s.brand,s.material,s.color].filter(Boolean).join(" • "))}</div><div class="price">${money(s.price)} / ${s.initial}g</div><div class="stock">Restante: ${s.current}g • ${money(s.price/s.initial*1000)}/kg</div><button class="delete" data-spool="${s.id}">Excluir carretel</button></div></article>`).join("");$("emptyFilaments").classList.toggle("hidden",spools.length>0);document.querySelectorAll("[data-spool]").forEach(b=>b.addEventListener("click",()=>{if(confirm("Excluir carretel?")){spools=spools.filter(s=>s.id!==b.dataset.spool);persist();renderSpools();fillSpoolOptions();}}));}
-function fillSpoolOptions(){ $("filamentOptions").innerHTML=spools.map(s=>`<option value="${escapeHtml(s.name)}">`).join("");}
-function renderHistory(){ $("historyList").innerHTML=history.slice().reverse().map(h=>`<div class="result-line"><span><b>${escapeHtml(h.name)}</b><br><small>${new Date(h.date).toLocaleString("pt-BR")} • ${escapeHtml(h.machine)} • ${h.quantity} un.</small></span><strong>${money(h.totalPrice)}</strong></div>`).join("");$("emptyHistory").classList.toggle("hidden",history.length>0);}
-function render(){renderProducts();renderSpools();renderHistory();fillSpoolOptions();}
-$("catalogSearch").addEventListener("input",renderProducts);
-$("productPhoto").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;if(f.size>2*1024*1024){alert("Escolha foto de até 2 MB.");e.target.value="";return;}const r=new FileReader();r.onload=()=>{currentPhoto=r.result;$("photoPreview").innerHTML=`<img src="${currentPhoto}" alt="Prévia">`;};r.readAsDataURL(f);});
-$("productForm").addEventListener("submit",e=>{e.preventDefault();products.push({id:crypto.randomUUID(),name:$("productName").value.trim(),price:Number($("productPrice").value),stock:Number($("productStock").value||0),description:$("productDescription").value.trim(),photo:currentPhoto,createdAt:new Date().toISOString()});persist();render();e.target.reset();currentPhoto="";$("photoPreview").innerHTML="";$("productMsg").textContent="Produto salvo. As alterações serão sincronizadas quando a conexão com a nuvem estiver ativa.";});
-$("filamentForm").addEventListener("submit",e=>{e.preventDefault();spools.push({id:crypto.randomUUID(),name:$("spoolName").value.trim(),brand:$("spoolBrand").value,material:$("spoolMaterial").value,color:$("spoolColor").value,price:Number($("spoolPrice").value),initial:Number($("spoolInitial").value),current:Number($("spoolCurrent").value)});persist();e.target.reset();$("spoolInitial").value=1000;$("spoolCurrent").value=1000;renderSpools();fillSpoolOptions();});
-function timeHours(v){const m=String(v||"0:00").trim().match(/^(\d+)(?::([0-5]?\d))?$/);return m?Number(m[1])+Number(m[2]||0)/60:0;}
-function loadSettings(){ $("a1Watts").value=settings.A1.watts;$("a1Price").value=settings.A1.price;$("a1Life").value=settings.A1.life;$("miniWatts").value=settings.mini.watts;$("miniPrice").value=settings.mini.price;$("miniLife").value=settings.mini.life;$("energyRate").value=settings.energyRate;$("laborRate").value=settings.laborRate;$("defaultFilament").value=settings.defaultFilament;$("filamentPrice").value=settings.defaultFilament;}
-$("settingsForm").addEventListener("submit",e=>{e.preventDefault();settings={A1:{watts:Number($("a1Watts").value),price:Number($("a1Price").value),life:Number($("a1Life").value)},mini:{watts:Number($("miniWatts").value),price:Number($("miniPrice").value),life:Number($("miniLife").value)},energyRate:Number($("energyRate").value),laborRate:Number($("laborRate").value),defaultFilament:Number($("defaultFilament").value)};persist();$("settingsMsg").textContent="Ajustes salvos neste aparelho.";});
-$("costForm").addEventListener("submit",e=>{
- e.preventDefault();
- const machine=$("machine").value, cfg=machine==="A1"?settings.A1:settings.mini;
- const quantity=Math.max(1,Number($("quantity").value)),grams=Number($("grams").value),printHours=timeHours($("printTime").value),finishHours=timeHours($("finishTime").value);
- const selected=spools.find(s=>s.name===$("filamentSelect").value);
- const filamentKg=selected?selected.price/selected.initial*1000:Number($("filamentPrice").value||settings.defaultFilament);
- const material=grams/1000*filamentKg;
- const energy=printHours*(cfg.watts/1000)*settings.energyRate;
- const depreciation=cfg.life>0?printHours*(cfg.price/cfg.life):0;
- const labor=finishHours*settings.laborRate;
- const extras=Number($("extras").value)+Number($("packaging").value);
- const base=material+energy+depreciation+labor+extras;
- const risk=Math.max(0,Math.min(100,Number($("failure").value)))/100;
- const cost=risk<1?base/(1-risk):base;
- const margin=Number($("margin").value)/100,price=cost*(1+margin),profit=price-cost;
- lastCalculation={id:crypto.randomUUID(),name:$("costName").value.trim(),machine,quantity,grams,printHours,finishHours,material,energy,depreciation,labor,extras,risk,cost,price,totalPrice:price*quantity,profit:profit*quantity,unitCost:cost/quantity,unitPrice:price};
- $("rFilament").textContent=money(material);$("rEnergy").textContent=money(energy);$("rDepreciation").textContent=money(depreciation);$("rLabor").textContent=money(labor);$("rExtras").textContent=money(extras);$("rFailure").textContent=money(cost-base);$("rCost").textContent=money(cost);$("rUnitCost").textContent=money(cost/quantity);$("rPrice").textContent=money(price*quantity);$("rUnitPrice").textContent=money(price);$("rProfit").textContent=`Lucro bruto estimado do projeto: ${money(profit*quantity)} • ${quantity} unidade(s).`;const payback=price>0&&cfg.price>0?Math.ceil(cfg.price/price):0;$("rPayback").textContent=cfg.price>0?`Retorno bruto do valor da máquina: aproximadamente ${payback} unidade(s) ao preço sugerido (sem considerar outros custos fixos).`:"Informe o preço da máquina em Ajustes para estimar o retorno do investimento.";$("costResult").classList.remove("hidden");
-});
-$("saveCalculation").addEventListener("click",()=>{if(!lastCalculation)return;history.push({...lastCalculation,date:new Date().toISOString()});persist();renderHistory();alert("Cálculo salvo no histórico deste aparelho.");});
-$("saveCostProduct").addEventListener("click",()=>{if(!lastCalculation)return;products.push({id:crypto.randomUUID(),name:lastCalculation.name,price:Number(lastCalculation.unitPrice.toFixed(2)),stock:0,description:`Calculado na ${lastCalculation.machine} • Custo unitário ${money(lastCalculation.unitCost)}`,photo:"",createdAt:new Date().toISOString()});persist();renderProducts();showTab("catalog");});
-$("copyQuote").addEventListener("click",()=>{if(!lastCalculation)return;const c=lastCalculation;const txt=`SHARK 3D — ORÇAMENTO\nProjeto: ${c.name}\nImpressora: ${c.machine}\nQuantidade: ${c.quantity}\nPreço por unidade: ${money(c.unitPrice)}\nTotal: ${money(c.totalPrice)}\nOrçamento sujeito à confirmação.`;navigator.clipboard?.writeText(txt).then(()=>alert("Orçamento copiado!")).catch(()=>alert(txt));});
-$("exportHistory").addEventListener("click",()=>{const rows=[["Projeto","Impressora","Quantidade","Custo","Preço total","Data"],...history.map(h=>[h.name,h.machine,h.quantity,h.cost,h.totalPrice,h.date])];const csv=rows.map(r=>r.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(";")).join("\n");download("shark3d-historico.csv",csv,"text/csv;charset=utf-8;");});
-function download(name,data,type){const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);}
-$("backupBtn").addEventListener("click",()=>download("backup-shark3d.json",JSON.stringify({products,spools,history,settings},null,2),"application/json"));
-$("restoreFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);products=d.products||[];spools=d.spools||[];history=d.history||[];settings=d.settings||settings;persist();loadSettings();render();alert("Backup restaurado neste aparelho.");}catch{alert("Arquivo de backup inválido.");}};r.readAsText(f);});
-async function enterApp(session){
- cloudReady=false;cloudUser=session.user;
- $("connection").textContent="Sincronizando…";
- const {data,error}=await cloud.from("shark3d_app_data").select("payload").eq("owner_id",cloudUser.id).maybeSingle();
- if(error){$("connection").textContent="Falha na conexão";$("loginMsg").textContent="Erro ao carregar os dados: "+error.message;return;}
- if(data&&data.payload){
-  products=data.payload.products||[];spools=data.payload.spools||[];history=data.payload.history||[];
-  settings=data.payload.settings||settings;persistLocal();
- }else{
-  const payload={products,spools,history,settings};
-  const {error:saveError}=await cloud.from("shark3d_app_data").upsert({owner_id:cloudUser.id,payload,updated_at:new Date().toISOString()},{onConflict:"owner_id"});
-  if(saveError){$("connection").textContent="Falha ao iniciar";$("loginMsg").textContent="Erro ao iniciar os dados: "+saveError.message;return;}
- }
- cloudReady=true;
- $("loginView").classList.add("hidden");$("appView").classList.remove("hidden");$("logoutBtn").classList.remove("hidden");
- $("connection").textContent="☁️ Sincronizado";
- loadSettings();render();
+function tab(name){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===name));}
+document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+function card(p){return `<article class="product">${p.photo?`<img src="${p.photo}" alt="">`:`<div class="placeholder">🦈</div>`}<div class="product-body"><h3>${escapeHtml(p.name)}</h3><div class="desc">${escapeHtml(p.description||"Produto Shark 3D")}</div><div class="price">${money(p.price)}</div><div class="stock">${Number(p.stock||0)} disponível(is)</div><button class="secondary" data-edit="${p.id}">Editar produto</button><label class="secondary" style="text-align:center;cursor:pointer">📷 Trocar foto<input type="file" accept="image/*" data-photo="${p.id}" style="display:none"></label><button class="delete" data-del="${p.id}">Excluir</button></div></article>`;}
+function render(){const q=$("search").value.toLowerCase(),list=products.filter(p=>p.name.toLowerCase().includes(q));$("catalogGrid").innerHTML=list.map(card).join("");$("recent").innerHTML=products.slice(-4).reverse().map(card).join("");$("totalProducts").textContent=products.length;$("totalStock").textContent=products.reduce((a,p)=>a+Number(p.stock||0),0);$("count").textContent=products.length+" produto(s)";$("emptyCatalog").classList.toggle("hidden",list.length>0);$("emptyRecent").classList.toggle("hidden",products.length>0);$("spoolGrid").innerHTML=spools.map(s=>`<article class="product"><div class="product-body"><h3>${escapeHtml(s.name)}</h3><div class="desc">${escapeHtml([s.brand,s.material,s.color].filter(Boolean).join(" • "))}</div><div class="price">${money(s.price)}</div><div class="stock">Restante: ${s.current}g de ${s.initial}g</div><button class="delete" data-spooldel="${s.id}">Excluir carretel</button></div></article>`).join("");$("emptySpools").classList.toggle("hidden",spools.length>0);$("historyList").innerHTML=history.slice().reverse().map(h=>`<div class="result-line"><span>${escapeHtml(h.name)}<br><small>${new Date(h.date).toLocaleString("pt-BR")}</small></span><strong>${money(h.total)}</strong></div>`).join("");$("emptyHistory").classList.toggle("hidden",history.length>0);
+document.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{if(confirm("Excluir este produto?")){products=products.filter(p=>p.id!==b.dataset.del);persist();render();}});
+document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>{const p=products.find(x=>x.id===b.dataset.edit);if(!p)return;let n=prompt("Nome:",p.name);if(n===null)return;let d=prompt("Descrição:",p.description||"");if(d===null)return;let v=prompt("Preço:",p.price);if(v===null)return;let st=prompt("Estoque:",p.stock||0);if(st===null)return;if(!n.trim()||!Number.isFinite(+v)||+v<0||!Number.isFinite(+st)||+st<0){alert("Confira os dados.");return;}Object.assign(p,{name:n.trim(),description:d.trim(),price:+v,stock:Math.floor(+st)});persist();render();});
+document.querySelectorAll("[data-photo]").forEach(i=>i.onchange=e=>{const p=products.find(x=>x.id===i.dataset.photo);if(p)readPhoto(e.target.files[0],photo=>{p.photo=photo;persist();render();});});
+document.querySelectorAll("[data-spooldel]").forEach(b=>b.onclick=()=>{if(confirm("Excluir carretel?")){spools=spools.filter(s=>s.id!==b.dataset.spooldel);persist();render();}});
 }
-$("loginBtn").addEventListener("click",async()=>{
- $("loginMsg").textContent="Entrando…";
- const {data,error}=await cloud.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
- if(error){$("loginMsg").textContent="Não foi possível entrar: "+error.message;return;}
- await enterApp(data.session);
-});
-$("signupBtn").addEventListener("click",async()=>{
- const email=$("email").value.trim(),password=$("password").value;
- if(!email||password.length<6){$("loginMsg").textContent="Informe e-mail e senha com pelo menos 6 caracteres.";return;}
- $("loginMsg").textContent="Criando acesso…";
- const {data,error}=await cloud.auth.signUp({email,password});
- if(error){$("loginMsg").textContent="Não foi possível criar: "+error.message;return;}
- if(data.session){await enterApp(data.session);}
- else{$("loginMsg").textContent="Acesso criado. Confira seu e-mail para confirmar a conta; depois entre aqui.";}
-});
-$("logoutBtn").addEventListener("click",async()=>{await cloud.auth.signOut();});
-cloud.auth.onAuthStateChange((event,session)=>{
- if(event==="SIGNED_OUT"){
-  cloudReady=false;cloudUser=null;$("appView").classList.add("hidden");$("loginView").classList.remove("hidden");$("logoutBtn").classList.add("hidden");$("connection").textContent="Desconectado";
- }
-});
-cloud.auth.getSession().then(({data})=>{if(data.session)enterApp(data.session);});
-if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
-
-</script>
-<script>/* Arquivo único: instalação PWA e sincronização em nuvem ainda não ativadas. */</script></body>
-</html>
+function readPhoto(file,done){if(!file)return;if(!file.type.startsWith("image/")){alert("Selecione uma imagem.");return;}if(file.size>2*1024*1024){alert("Escolha uma foto de até 2 MB.");return;}const r=new FileReader();r.onload=()=>done(r.result);r.readAsDataURL(file);}
+function usePhoto(file){readPhoto(file,data=>{currentPhoto=data;$("photoPreview").innerHTML=`<img src="${data}" alt="Prévia da foto">`;});}
+$("productPhoto").onchange=e=>usePhoto(e.target.files[0]);
+const drop=$("photoDrop");drop.onclick=e=>{if(!e.target.closest(".photo-pick"))$("productPhoto").click();};drop.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();$("productPhoto").click();}};drop.ondragover=e=>{e.preventDefault();drop.classList.add("dragover");};drop.ondragleave=()=>drop.classList.remove("dragover");drop.ondrop=e=>{e.preventDefault();drop.classList.remove("dragover");usePhoto(e.dataTransfer.files[0]);};document.addEventListener("paste",e=>{if(document.activeElement===drop||drop.contains(document.activeElement)){const item=[...(e.clipboardData?.items||[])].find(x=>x.type.startsWith("image/"));if(item){e.preventDefault();usePhoto(item.getAsFile());}}});
+$("productForm").onsubmit=e=>{e.preventDefault();products.push({id:crypto.randomUUID(),name:$("productName").value.trim(),price:+$("productPrice").value,stock:+$("productStock").value||0,description:$("productDescription").value.trim(),photo:currentPhoto,createdAt:new Date().toISOString()});persist();render();e.target.reset();currentPhoto="";$("photoPreview").innerHTML="";$("productMsg").textContent="Produto salvo. Sincronizando com a nuvem…";};
+$("search").oninput=render;
+$("filamentForm").onsubmit=e=>{e.preventDefault();spools.push({id:crypto.randomUUID(),name:$("spoolName").value,brand:$("spoolBrand").value,material:$("spoolMaterial").value,color:$("spoolColor").value,price:+$("spoolPrice").value,initial:+$("spoolInitial").value,current:+$("spoolCurrent").value});persist();e.target.reset();$("spoolInitial").value=$("spoolCurrent").value=1000;render();};
+$("costForm").onsubmit=e=>{e.preventDefault();const grams=+$("grams").value,qty=Math.max(1,+$("quantity").value),mat=grams/1000*(+$("filamentPrice").value),energy=(+$("hours").value)*.1,base=mat+energy+(+$("extras").value),total=base*(1+(+$("margin").value)/100);$("costResult").classList.remove("hidden");$("costResult").innerHTML=`<div class="result-line"><span>Material</span><b>${money(mat)}</b></div><div class="result-line"><span>Energia estimada</span><b>${money(energy)}</b></div><div class="result-line"><span>Custo estimado</span><b>${money(base)}</b></div><div class="result-line"><span>Preço sugerido por unidade</span><b>${money(total)}</b></div><div class="result-line"><span>Total (${qty} un.)</span><b>${money(total*qty)}</b></div><button id="saveCalc" class="secondary">Salvar no histórico</button>`;$("saveCalc").onclick=()=>{history.push({name:$("costName").value,total:total*qty,date:new Date().toISOString()});persist();render();alert("Cálculo salvo.");};};
+function download(name,data,type){const a=document.createElement("a"),u=URL.createObjectURL(new Blob([data],{type}));a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);}
+$("backup").onclick=()=>download("backup-shark3d.json",JSON.stringify({products,spools,history},null,2),"application/json");
+$("restore").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!confirm("Isso substituirá os dados atuais. Continuar?"))return;products=d.products||[];spools=d.spools||[];history=d.history||[];persist();render();alert("Backup restaurado.");}catch{alert("Arquivo inválido.");}};r.readAsText(f);};
+$("exportHistory").onclick=()=>{const rows=[["Projeto","Total","Data"],...history.map(h=>[h.name,h.total,h.date])];download("shark3d-historico.csv",rows.map(r=>r.map(v=>'"'+String(v??"").replaceAll('"','""')+'"').join(";")).join("\n"),"text/csv;charset=utf-8;");};
+async function enter(session){user=session.user;ready=false;$("connection").textContent="Sincronizando…";const {data,error}=await db.from("shark3d_app_data").select("payload").eq("owner_id",user.id).maybeSingle();if(error){$("connection").textContent="Falha na conexão";$("loginMsg").textContent=error.message;return;}if(data?.payload){products=data.payload.products||[];spools=data.payload.spools||[];history=data.payload.history||[];}else{const {error:e}=await db.from("shark3d_app_data").upsert({owner_id:user.id,payload:{products,spools,history,settings},updated_at:new Date().toISOString()},{onConflict:"owner_id"});if(e){$("loginMsg").textContent=e.message;return;}}ready=true;$("login").classList.add("hidden");$("app").classList.remove("hidden");$("logout").classList.remove("hidden");$("connection").textContent="☁️ Sincronizado";render();}
+$("loginBtn").onclick=async()=>{const {data,error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});$("loginMsg").textContent=error?error.message:"";if(data.session)await enter(data.session);};
+$("signupBtn").onclick=async()=>{if($("password").value.length<6){$("loginMsg").textContent="A senha precisa ter pelo menos 6 caracteres.";return;}const {data,error}=await db.auth.signUp({email:$("email").value.trim(),password:$("password").value});$("loginMsg").textContent=error?error.message:(data.session?"Conta criada.":"Conta criada. Confirme o e-mail e depois entre.");if(data.session)await enter(data.session);};
+$("logout").onclick=async()=>db.auth.signOut();db.auth.onAuthStateChange((ev)=>{if(ev==="SIGNED_OUT"){ready=false;user=null;$("app").classList.add("hidden");$("login").classList.remove("hidden");$("logout").classList.add("hidden");$("connection").textContent="Desconectado";}});db.auth.getSession().then(({data})=>{if(data.session)enter(data.session);});
+</script></body></html>
