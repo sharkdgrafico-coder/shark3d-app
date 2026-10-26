@@ -25,7 +25,7 @@
 </section></main><footer>SHARK 3D • Gestão e catálogo</footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const URL="https://gxtxnxsmzyptuwgmkvmv.supabase.co",KEY="sb_publishable_vBvDsjqzGcS459b6t04snA_1wySvVO1",db=window.supabase.createClient(URL,KEY),$=id=>document.getElementById(id),money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const SUPABASE_URL="https://gxtxnxsmzyptuwgmkvmv.supabase.co",KEY="sb_publishable_vBvDsjqzGcS459b6t04snA_1wySvVO1",db=window.supabase.createClient(SUPABASE_URL,KEY),$=id=>document.getElementById(id),money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 let user=null,ready=false,timer=null,currentPhoto="",products=[],spools=[],history=[];
 const settings={defaultFilament:140};
 function persistLocal(){localStorage.setItem("shark3d_products",JSON.stringify(products));localStorage.setItem("shark3d_spools",JSON.stringify(spools));localStorage.setItem("shark3d_history",JSON.stringify(history));}
