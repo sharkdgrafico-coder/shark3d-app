@@ -21,20 +21,21 @@ hr{border:0;border-top:1px solid var(--line);margin:22px 0}
 <body>
 <header class="topbar">
   <div class="brand"><div class="mark">🦈</div><div><strong>SHARK <span>3D</span></strong><small>GESTÃO E CATÁLOGO</small></div></div>
-  <div id="connection" class="connection">Modo local no computador</div>
+  <div style="display:flex;align-items:center;gap:8px"><div id="connection" class="connection">Aguardando acesso</div><button id="logoutBtn" class="secondary hidden" style="width:auto;margin:0;padding:7px 10px">Sair</button></div>
 </header>
 
 <main>
-  <section id="loginView" class="login card hidden">
+  <section id="loginView" class="login card">
     <h1>Acessar Shark 3D</h1>
     <p>Entre com o e-mail e a senha compartilhados por vocês.</p>
     <label>E-mail<input id="email" type="email" placeholder="voce@email.com" autocomplete="username"></label>
     <label>Senha<input id="password" type="password" placeholder="Sua senha" autocomplete="current-password"></label>
-    <button id="loginBtn" class="primary">Entrar</button>
+    <button id="loginBtn" class="primary" type="button">Entrar</button>
+    <button id="signupBtn" class="secondary" type="button">Criar acesso</button>
     <p id="loginMsg" class="muted"></p>
   </section>
 
-  <section id="appView">
+  <section id="appView" class="hidden">
     <section class="hero">
       <div><p class="eyebrow">PAINEL DE CONTROLE</p><h1>Olá! Vamos produzir? 💙</h1><p>Organize seus produtos, custos e catálogo em um só lugar.</p></div>
       <div class="hero-shark">🦈</div>
@@ -149,11 +150,12 @@ hr{border:0;border-top:1px solid var(--line);margin:22px 0}
   </section>
 </main>
 <footer>SHARK 3D • Feito para organizar suas ideias e suas impressões.</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // Shark 3D App — versão ampliada com calculadora, estoque de filamentos e histórico.
 // Os dados desta versão permanecem no aparelho. Sincronização entre celulares ainda requer backend.
-const SUPABASE_URL = "";
-const SUPABASE_ANON_KEY = "";
+const SUPABASE_URL = "https://gxtxnxsmzyptuwgmkvmv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_vBvDsjqzGcS459b6t04snA_1wySvVO1";
 const $ = id => document.getElementById(id);
 const money = n => Number(n || 0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 const read = (key, fallback) => {try{return JSON.parse(localStorage.getItem(key)) ?? fallback}catch{return fallback}};
@@ -163,7 +165,20 @@ let settings=read("shark3d_settings",{
  energyRate:1,laborRate:0,defaultFilament:140
 });
 let lastCalculation=null, currentPhoto="";
-const persist=()=>{localStorage.setItem("shark3d_products",JSON.stringify(products));localStorage.setItem("shark3d_spools",JSON.stringify(spools));localStorage.setItem("shark3d_history",JSON.stringify(history));localStorage.setItem("shark3d_settings",JSON.stringify(settings));};
+const cloud=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+let cloudUser=null, cloudReady=false, cloudTimer=null;
+const persistLocal=()=>{localStorage.setItem("shark3d_products",JSON.stringify(products));localStorage.setItem("shark3d_spools",JSON.stringify(spools));localStorage.setItem("shark3d_history",JSON.stringify(history));localStorage.setItem("shark3d_settings",JSON.stringify(settings));};
+const persist=()=>{
+ persistLocal();
+ if(!cloudReady||!cloudUser)return;
+ clearTimeout(cloudTimer);
+ cloudTimer=setTimeout(async()=>{
+  const payload={products,spools,history,settings};
+  const {error}=await cloud.from("shark3d_app_data").upsert({owner_id:cloudUser.id,payload,updated_at:new Date().toISOString()},{onConflict:"owner_id"});
+  $("connection").textContent=error?"Erro ao sincronizar":"☁️ Sincronizado";
+  if(error)console.error("Supabase:",error);
+ },700);
+};
 function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function showTab(name){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===name));}
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
@@ -206,7 +221,46 @@ $("exportHistory").addEventListener("click",()=>{const rows=[["Projeto","Impress
 function download(name,data,type){const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);}
 $("backupBtn").addEventListener("click",()=>download("backup-shark3d.json",JSON.stringify({products,spools,history,settings},null,2),"application/json"));
 $("restoreFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);products=d.products||[];spools=d.spools||[];history=d.history||[];settings=d.settings||settings;persist();loadSettings();render();alert("Backup restaurado neste aparelho.");}catch{alert("Arquivo de backup inválido.");}};r.readAsText(f);});
-loadSettings();render();
+async function enterApp(session){
+ cloudReady=false;cloudUser=session.user;
+ $("connection").textContent="Sincronizando…";
+ const {data,error}=await cloud.from("shark3d_app_data").select("payload").eq("owner_id",cloudUser.id).maybeSingle();
+ if(error){$("connection").textContent="Falha na conexão";$("loginMsg").textContent="Erro ao carregar os dados: "+error.message;return;}
+ if(data&&data.payload){
+  products=data.payload.products||[];spools=data.payload.spools||[];history=data.payload.history||[];
+  settings=data.payload.settings||settings;persistLocal();
+ }else{
+  const payload={products,spools,history,settings};
+  const {error:saveError}=await cloud.from("shark3d_app_data").upsert({owner_id:cloudUser.id,payload,updated_at:new Date().toISOString()},{onConflict:"owner_id"});
+  if(saveError){$("connection").textContent="Falha ao iniciar";$("loginMsg").textContent="Erro ao iniciar os dados: "+saveError.message;return;}
+ }
+ cloudReady=true;
+ $("loginView").classList.add("hidden");$("appView").classList.remove("hidden");$("logoutBtn").classList.remove("hidden");
+ $("connection").textContent="☁️ Sincronizado";
+ loadSettings();render();
+}
+$("loginBtn").addEventListener("click",async()=>{
+ $("loginMsg").textContent="Entrando…";
+ const {data,error}=await cloud.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
+ if(error){$("loginMsg").textContent="Não foi possível entrar: "+error.message;return;}
+ await enterApp(data.session);
+});
+$("signupBtn").addEventListener("click",async()=>{
+ const email=$("email").value.trim(),password=$("password").value;
+ if(!email||password.length<6){$("loginMsg").textContent="Informe e-mail e senha com pelo menos 6 caracteres.";return;}
+ $("loginMsg").textContent="Criando acesso…";
+ const {data,error}=await cloud.auth.signUp({email,password});
+ if(error){$("loginMsg").textContent="Não foi possível criar: "+error.message;return;}
+ if(data.session){await enterApp(data.session);}
+ else{$("loginMsg").textContent="Acesso criado. Confira seu e-mail para confirmar a conta; depois entre aqui.";}
+});
+$("logoutBtn").addEventListener("click",async()=>{await cloud.auth.signOut();});
+cloud.auth.onAuthStateChange((event,session)=>{
+ if(event==="SIGNED_OUT"){
+  cloudReady=false;cloudUser=null;$("appView").classList.add("hidden");$("loginView").classList.remove("hidden");$("logoutBtn").classList.add("hidden");$("connection").textContent="Desconectado";
+ }
+});
+cloud.auth.getSession().then(({data})=>{if(data.session)enterApp(data.session);});
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
 
 </script>
